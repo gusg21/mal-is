@@ -10,6 +10,8 @@ class MalList(MalType): # List type (+ 4 4)
     def __init__(self, items:list):
         self.content = items
 
+EmptyList = MalList([])
+
 class MalNumber(MalType): # Number type
     my_type = "number"
 
@@ -30,6 +32,9 @@ class MalNumber(MalType): # Number type
     
     def __pow__(self, other):
         return MalNumber(self.content ** other.content)
+
+    def __int__(self):
+        return int(self.content)
 
 class MalSymbol(MalType): # Operational symbol (+ - * / etc.)
     my_type = "symbol"
@@ -55,6 +60,36 @@ class MalVector(MalType):
     def __init__(self, content):
         self.content = content
 
+class MalBool(MalType):
+    my_type = "bool"
+
+    def __init__(self, content):
+        self.content = content
+
+class MalNil(MalType):
+    my_type = "nil"
+
+    def __init__(self):
+        self.content = None
+
+class MalFuntion(MalType):
+    my_type = "function"
+
+    def __init__(self, _eval, BigEEnv, ast, env, params):
+        self.eval = _eval
+        self.ast = ast
+        self.env = env
+        self.params = params
+        self.bigEEnv = BigEEnv
+        self.content = self.fn
+    
+    def fn(self, args):
+        return self.eval(self.ast, self.bigEEnv(self.env, self.params, MalList(args)))
+    
+    def __call__(self, *args):
+        return self.fn(args)
+
+
 SYMBOLS = {
     "+" : "plus", 
     "=" : "equal", 
@@ -63,5 +98,13 @@ SYMBOLS = {
     "/" : "divide", 
     ">" : "greater than", 
     "<" : "less than",
-    "^" : "power"
+    "^" : "power",
+    "def!" : "define",
+    "let*" : "let",
+    "true" : "true",
+    "false" : "false",
+    "nil" : "nil",
+    "do" : "do",
+    "if" : "if",
+    "fn*" : "function"
 } # symbols that qualify as MalSymbol

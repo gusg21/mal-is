@@ -24,5 +24,11 @@ def print_str(mal_object:mytypes.MalType) -> str:
         return "str:\"" + mal_object.content + "\""
     elif mal_object.my_type == "keyword":
         return "keyword:" + mal_object.content
+    elif mal_object.my_type == "bool":
+        return str(mal_object.content)
+    elif mal_object.my_type == "nil":
+        return "nil"
+    elif mal_object.my_type == "function":
+        return "<function>"
     else:
         return "Printing error"

@@ -40,7 +40,7 @@ def read_str_(token:str):
     
     return internal
 
-def read_list(reader:Reader, start="(", end=")", isvec=False) -> list:
+def read_list(reader:Reader, start="(", end=")", isvec=False):
     ast = []
 
     token = reader.next()
@@ -49,9 +49,16 @@ def read_list(reader:Reader, start="(", end=")", isvec=False) -> list:
         print("malformed list")
         sys.exit(1)
 
-    while token != end:
-        ast.append(read_form(reader))
+    while True:
         token = reader.peek()
+        if token == end:
+            break
+
+        thing = read_form(reader)
+        if thing is not None:
+            ast.append(thing)
+
+    reader.next()
 
     if isvec:
         return mytypes.MalVector(ast)
@@ -61,13 +68,21 @@ def read_list(reader:Reader, start="(", end=")", isvec=False) -> list:
 def read_atom(reader:Reader):
     token = reader.next()
 
+    print(token)
+
     if token.isnumeric():
         return mytypes.MalNumber(float(token))
     elif token[0] == "\"":
         return mytypes.MalString(read_str_(token))
     elif token[0] == ":":
         return mytypes.MalKeyword(token[1:])
-    elif token in mytypes.SYMBOLS.keys():
+    elif token == "true":
+        return mytypes.MalBool(True)
+    elif token == "false":
+        return mytypes.MalBool(False)
+    elif token == "nil":
+        return mytypes.MalNil()
+    else:
         return mytypes.MalSymbol(token)
 
 def read_form(reader:Reader):
