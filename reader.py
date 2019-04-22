@@ -23,6 +23,7 @@ def tokenize(string):
         )
         
     for token in raw_tokens:
+        print("token ----> " + token)
         if token == "":
             raw_tokens.remove(token)
             

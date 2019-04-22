@@ -6,6 +6,9 @@ def print_str(mal_object:mytypes.MalType) -> str:
     if mal_object is None:
         return ""
 
+    if callable(mal_object):
+        return "<builtin (python function)>"
+
     if mal_object.my_type in ["list", "vector"]:
         if mal_object.my_type == "list":
             parens = ("(", ")")
@@ -19,7 +22,7 @@ def print_str(mal_object:mytypes.MalType) -> str:
     elif mal_object.my_type == "number":
         return str(mal_object.content)
     elif mal_object.my_type == "symbol":
-        return mytypes.SYMBOLS[mal_object.content]
+        return "symbol: " + mal_object.content
     elif mal_object.my_type == "string":
         return "str:\"" + mal_object.content + "\""
     elif mal_object.my_type == "keyword":

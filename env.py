@@ -29,7 +29,7 @@ class Env():
         print("Searching for symbol \"{}\" in {}".format(symbol.content, keys))
 
         if symbol.content in keys:
-            print("Found \"{}\" in {}".format(symbol, self.data))
+            print("Found")
             return self
         else:
             if self.outer is not None:

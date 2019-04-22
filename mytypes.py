@@ -88,23 +88,3 @@ class MalFuntion(MalType):
     
     def __call__(self, *args):
         return self.fn(args)
-
-
-SYMBOLS = {
-    "+" : "plus", 
-    "=" : "equal", 
-    "-" : "minus", 
-    "*" : "multiply", 
-    "/" : "divide", 
-    ">" : "greater than", 
-    "<" : "less than",
-    "^" : "power",
-    "def!" : "define",
-    "let*" : "let",
-    "true" : "true",
-    "false" : "false",
-    "nil" : "nil",
-    "do" : "do",
-    "if" : "if",
-    "fn*" : "function"
-} # symbols that qualify as MalSymbol
