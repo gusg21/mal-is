@@ -40,13 +40,12 @@ def READ(input):
 
 def EVAL(ast, _env:env.Env):
     '''Evaluates its input (tokens, probably)'''
-    print("Ca")
+    print("Eval begin")
 
     # print("LLLLLLLLLLLLLLLLLLLLLLLLLLL :::: !!!!!!! ;;;; :" + str(ast.content[1].content))
 
-    print(ast.my_type, _env)
-    print(str(ast.content) + " MEMES")
-    print("THE ASSYMETRICAL SYNTAX TABLE::::: !!!! " + str(ast.content))
+    #print(ast.my_type, _env)
+    print(">>>> AST: " + str(ast.content))
     if ast.my_type not in ["list", "vector"]:
         print("non list, breaking out")
         return eval_ast(ast, _env)
@@ -63,10 +62,9 @@ def EVAL(ast, _env:env.Env):
         a2 = ast.content[2]
     except IndexError:
         a2 = mytypes.MalNil()
-    print("LARGE EGG " + str(a0))
 
     if "def!" == a0.content:
-        print("^^^^^^^" + str(a1) + str(a2))
+        print("Define with: " + str(a1) + str(a2))
         res = EVAL(a2, _env)
         return _env.set_(a1, res)
     elif "let*" == a0.content:
@@ -87,10 +85,10 @@ def EVAL(ast, _env:env.Env):
             a3 = None
 
         if EVAL(a1, _env).content:
-            print("IT WAS TRUUEE!!!!")
+            print("Evaled true")
             return EVAL(a2, _env)
         else:
-            print("FALSEEE! NOT TRUEEE!!")
+            print("Evaled false")
             if a3 != None:
                 return EVAL(a3, _env)
             else:
@@ -136,7 +134,7 @@ def fn_slurp(a):
     f = open(a.content)
     data = f.read()
     f.close()
-    print(data + " blarrrrrg")
+    print(data + " loaded from file")
     return mytypes.MalString(data)
 
 def fn_load_file(a):
