@@ -74,17 +74,25 @@ class MalNil(MalType):
 
 class MalFuntion(MalType):
     my_type = "function"
+    is_macro = False
 
-    def __init__(self, _eval, BigEEnv, ast, env, params):
+    def __init__(self, _eval, BigEEnv, ast, env, params, is_macro=False):
         self.eval = _eval
         self.ast = ast
         self.env = env
         self.params = params
         self.bigEEnv = BigEEnv
         self.content = self.fn
+        self.is_macro = is_macro
     
     def fn(self, args):
         return self.eval(self.ast, self.bigEEnv(self.env, self.params, MalList(args)))
     
     def __call__(self, *args):
         return self.fn(args)
+
+class MalAtom(MalType):
+    my_type = "atom"
+
+    def __init__(self, content):
+        self.content = content

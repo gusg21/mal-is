@@ -35,12 +35,16 @@ class Env():
             if self.outer is not None:
                 return self.outer.find(symbol)
             else:
-                print("no variable up to top level")
-                sys.exit(1)
+                print("no variable up to top level (looking for {})".format(symbol.content))
+                return None
     
     def get(self, symbol:mytypes.MalSymbol):
         print(symbol, self.find(symbol))
         env = self.find(symbol)
+
+        if env is None:
+            return mytypes.MalNil()
+
         for item in env.data.keys():
             if item.content == symbol.content:
                 return env.data[item]
