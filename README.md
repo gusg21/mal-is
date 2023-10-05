@@ -2,6 +2,4 @@
 
 Make a Lisp
 
-This is for my independent study. This is all written in Python, and to see my progress go back through the commits
-
-_by gusg21_
+My implementation of a Lisp-like language for an indenpendent research project. Unsure if fully complete but at least 75% done if I recall correctly.
